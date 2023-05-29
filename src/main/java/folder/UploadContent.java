@@ -2,15 +2,19 @@ package folder;
 
 
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import PageObject.UpForReview;
 import PageObject.UploadPdfContent;
 import Utility.BaseClass;
+import Utility.DikshaUtils;
 import Utility.Library;
 
 public class UploadContent extends BaseClass {
@@ -19,9 +23,12 @@ public class UploadContent extends BaseClass {
 		
 
 	public static String UploadPdf() throws Exception {
+		
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		UploadPdfContent Upload=PageFactory.initElements(driver, UploadPdfContent.class);
+		Thread.sleep(1000);
 		Library.custom_click(Upload.getHeaderDropdown(), "Guest icon");
+		Thread.sleep(1000);
 		Library.custom_click(Upload.getWorkspace(), "workspace");
 		Thread.sleep(2000);
 		Library.custom_click(Upload.getUploadcontent(), "upload content");
@@ -33,18 +40,17 @@ public class UploadContent extends BaseClass {
 		Library.custom_click(Upload.geteTextbook(),"etextbook selected");
 		Thread.sleep(1000);
 	
-	    Library.custom_sendkeys(Upload.getBrowserbutton(),"D:\\Diksha_Prepod\\src\\main\\resources\\The-Prince-grahamcolor.pdf", "file uploaded");
+	    Library.custom_sendkeys(Upload.getBrowserbutton(),System.getProperty("user.dir")+config.get_short_pdf(), "file uploaded");
 	    Thread.sleep(5000);
 	    Library.custom_click(Upload.getSave(),"savebutton");
 	    Thread.sleep(2000);
 	    Library.custom_click(Upload.getClose(), "close");
-	    Thread.sleep(5000);
-	    String randomname="PDF_Sample_"+RandomStringUtils.randomAlphabetic(6);
+	    Thread.sleep(3000);
+	    String randomName=DikshaUtils.set_Content_Name("PDF_Content");
+	    excel.updateData("TestData","PDF" ,randomName, "");
+	   
 	    
-	    excel.updateData("TestData","PDF" ,randomname, "");
-	    
-	    
-	    return randomname;
+	    return randomName;
 	}
 	
 	public static void sendPdf_For_Review(String randomname) throws InterruptedException {
@@ -112,7 +118,7 @@ public class UploadContent extends BaseClass {
 	
 	public static void publishCourseFromUpForReview(String coursename) throws InterruptedException {
 UpForReview review=PageFactory.initElements(driver, UpForReview.class);
-		
+		wait=new WebDriverWait(driver, Duration.ofSeconds(30));
 		Library.custom_click(review.getHeaderDropdown(), "HeaderDropdown");
 		Thread.sleep(1000);
 		Library.custom_click(review.getWorkspace(),"Workspace");
@@ -125,10 +131,17 @@ UpForReview review=PageFactory.initElements(driver, UpForReview.class);
 		Thread.sleep(1000);
 		Library.custom_click(review.getTaboncourse(), "Taboncourse");
 		Thread.sleep(1000);
-		driver.navigate().refresh();
-		Thread.sleep(1000);
-		driver.navigate().refresh();
-		Thread.sleep(1000);
+		
+		int i=3;
+		while(!review.getPublishTheCourse().isDisplayed()) {
+			driver.navigate().refresh();
+			Thread.sleep(2000);
+			if(review.getPublishTheCourse().isDisplayed()&& i<4)
+			Library.custom_click(review.getPublishTheCourse(), "PublishTheCourse");
+			i++;
+			break;
+		}
+		
 		Library.custom_click(review.getPublishTheCourse(), "PublishTheCourse");
 		Thread.sleep(1000);
 		Library.custom_click(review.getConfirmpublishTheCourse(),"ConfirmForPublishCourse");

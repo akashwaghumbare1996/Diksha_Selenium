@@ -3,6 +3,7 @@ package folder;
 import java.time.Duration;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import PageObject.CreateBatchForCourse;
 import Utility.BaseClass;
 import Utility.Library;
+import io.reactivex.rxjava3.functions.Action;
 
 public class TPD extends BaseClass {
 
@@ -35,12 +37,22 @@ public class TPD extends BaseClass {
 	    Thread.sleep(2000);
 		Library.custom_click(createBatch.getIssueCertificateNo(), "IssueCertificateNo");
 		Thread.sleep(2000);
-		//JavascriptExecutor js=(JavascriptExecutor)driver;
-		//js.executeScript("Library.custom_sendkeys(createBatch.getStartDate(), excel.getExcelData(\"Sheet 2\", 1, 1), \"Start Date\");");
-		Library.custom_sendkeys(createBatch.getStartDate(), excel.getExcelData("Sheet 2", 1, 1), "Start Date");
-		Library.custom_sendkeys(createBatch.getEndDate(), excel.getExcelData("Sheet 2", 1, 0), course);
-		//js.executeScript("Library.custom_sendkeys(createBatch.getEndDate(), excel.getExcelData(\"Sheet 2\", 1, 0), course);");
+		Library.custom_click(createBatch.getStartDate(), "Start date");
+		Date.setTodayDate(driver);
+		Thread.sleep(1000);
+		Actions action=new Actions(driver);
+		action.sendKeys("\b").perform();
+		Thread.sleep(1000);
+		action.sendKeys("3").perform();
+		Thread.sleep(1000);
+	    Library.custom_click(createBatch.getEndDate(), "EndDate");
+	    Thread.sleep(1000);
+		Date.setTomorrowDate(driver);
+		Thread.sleep(1000);
 		Library.custom_click(createBatch.getCourseterms(), "course terms");
+		Thread.sleep(1000);
+		wait.until(ExpectedConditions.elementToBeClickable(createBatch.getCreateButton()));
+		Thread.sleep(1000);
 		Library.custom_click(createBatch.getCreateButton(), "Create button");
 	}
 }

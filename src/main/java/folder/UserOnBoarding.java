@@ -1,9 +1,18 @@
 package folder;
 
+import static org.testng.Assert.assertEquals;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+import org.testng.asserts.Assertion;
+
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.model.Test;
 
 import PageObject.BMCPopup;
 import PageObject.CreateBook;
@@ -21,11 +30,11 @@ import Utility.BaseClass;
 import Utility.Library;
 
 public  class UserOnBoarding extends BaseClass {
-
+	static ExtentTest test;
 	
-	public static void studenticon()   {
+	public static void studenticon() throws Exception   {
 		
-	try {
+	
 		
 		StudentProfile student=PageFactory.initElements(driver, StudentProfile.class);
 		Library.custom_click(student.getStudentIcon(), "student");
@@ -35,10 +44,7 @@ public  class UserOnBoarding extends BaseClass {
 	//	student.getContinueButton().click();
 		Thread.sleep(1000);	
 		
-	}catch(Exception e) {
 	
-		System.out.println(e.getMessage());
-	  }
   }
 
 	public static void teachericon()  {
@@ -76,9 +82,9 @@ public  class UserOnBoarding extends BaseClass {
 
 		}
 			
-		    public static void parenticon()  {
+		    public static void parenticon() throws Exception  {
 				
-		    try {
+		  
 		    	
 			    ParentProfile parent=PageFactory.initElements(driver , ParentProfile.class );
 			    Library.custom_click(parent.getParent(),"parent");
@@ -87,35 +93,45 @@ public  class UserOnBoarding extends BaseClass {
 		   //   parent.getContinueButton().click();
 			    Thread.sleep(1000);
 		   
-		    }catch(Exception e) {
-		   		
-		   		System.out.println(e.getMessage());
-		   	}	
+		   
 		}
 		    
-		   public static void schoolheadicon()  {
+		   public static void schoolheadicon() throws Exception  {
 			
-		  try {
+		 
 			
 			   SchoolHeadProfile schoolhead=PageFactory.initElements(driver , SchoolHeadProfile.class );
+			   BMCPopup bmcpopup=PageFactory.initElements(driver, BMCPopup.class);
+			   
 			   Library.custom_click(schoolhead.getSchoolhead(),"SchoolHead");
 			   Thread.sleep(1000);
 			   Library.custom_click(schoolhead.getContinueButton(),"continuebutton");
 			// schoolhead.getContinueButton().click();
 			   Thread.sleep(1000);
-			
-			}catch(Exception e) {
-				
-				System.out.println(e.getMessage());
-			}	
+			   
+			 
+//			 if ( (bmcpopup.getBoard().isDisplayed())) {
+//				 
+//				 System.out.println("passed");
+//			 }else{
+//				 
+//				 System.out.println("failed");
+//			 }
+		
+			 //  Assert.assertTrue(bmcpopup.getBoard().isDisplayed(),"successfully clicked on SchoolHeadProfile Continue Button ");
+			 
+			   Library.assert_Is_Displayed(bmcpopup.getBoard(), "SchoolHeadProfile Continue Button");
+			   
 		}
 		    
 
-			public static void bmcpopuphandle()  {
+			public static void bmcpopuphandle() throws Throwable  {
 				
-				try {
+				
 				
 				BMCPopup bmcpopup=PageFactory.initElements(driver, BMCPopup.class);
+				LocationPopup locationpopup=PageFactory.initElements(driver, LocationPopup.class);
+				
 				Library.custom_click(bmcpopup.getBoard(),"board");
 				Library.custom_click(bmcpopup.getCbsc(),"cbsc");
 				Thread.sleep(4000);
@@ -133,22 +149,31 @@ public  class UserOnBoarding extends BaseClass {
 				act.moveByOffset(50, 100).click().build().perform();
 				Thread.sleep(1000);
 				Library.custom_click(bmcpopup.getBMCSubmit(),"bmcsubmit");
-			//	bmcpopup.getBMCSubmit().click();
-				Thread.sleep(2000);
-			
-			}catch(Exception e) {
+				bmcpopup.getBMCSubmit().click();
+			    Thread.sleep(2000);
 				
-				System.out.println(e.getMessage());
-			}
+			    
+			//	Assert.assertTrue(locationpopup.getName().isDisplayed());
+			//	Thread.sleep(1000);
 			
-				
-			}
+//			    if ( (locationpopup.getName().isDisplayed())) {
+//					 
+//					 System.out.println("passed12");
+//				 }else{
+//					 
+//					 System.out.println("failed");
+//				 }
+		//	  Assert.assertTrue(locationpopup.getName().isDisplayed(),"successfully clicked on BMCPopup Submit Button ");
+		          		
+				Library.assert_Is_Displayed(locationpopup.getName(), "BMCPopup  submit button");			
+		}
 			
-			public static void locationpopuphandle() {
+			public static void locationpopuphandle() throws Exception {
 				
-				try {
+				
 				
 				LocationPopup locationpopup=PageFactory.initElements(driver, LocationPopup.class);
+				
 				Library.custom_click(locationpopup.getState(),"state");
 				Thread.sleep(1000);
 				Library.custom_click(locationpopup.getMaharashtraState(),"Maharashtra");
@@ -159,38 +184,48 @@ public  class UserOnBoarding extends BaseClass {
 				Thread.sleep(1000);
 				Library.custom_click(locationpopup.getSubmitButton(),"submitbutton");
 				Thread.sleep(1000);
-			
-				}catch(Exception e) {
+				locationpopup.getSubmitButton().isSelected();
+				Thread.sleep(1000);
 				
-			System.out.println(e.getMessage());
+		//	Assert.assertTrue(locationpopup.getguestprofile().isDisplayed());
+		//	boolean isElementDisplayed =locationpopup.getguestprofile().isDisplayed();
+//				
+//				String actualValue=locationpopup.getguestprofile().getText();
+//				System.out.println(actualValue);
+//				String expectedValue = "G";
+//				
+//				if (expectedValue.equals(actualValue)) {
+//				    System.out.println("Pass");
+//				} else {
+//				    System.out.println("Failed");
+//				}
+		//	Assert.assertTrue(locationpopup.getguestprofile().isDisplayed(),"successfully clicked on LocationPopup Submit Button ");
+          
+			//  Library.assert_Is_Displayed(locationpopup.getguestprofile(), " Locationpopup submit button");		
+		}
 			
-				}
-			}
+			public static void loginascreator() throws Throwable  {
 			
-			public static void loginascreator()  {
 			
-			try {
-				UserOnBoarding.schoolheadicon();
+				UserOnBoarding.studenticon();;
 				UserOnBoarding.bmcpopuphandle();
 				UserOnBoarding.locationpopuphandle();
 				
 				LoginPage loginpage=PageFactory.initElements(driver, LoginPage.class);
+				Logout    logout=PageFactory.initElements(driver, Logout.class);
 				
 		        Library.custom_click(loginpage.getHeaderDropdown(),"headerdropdown");
 				Thread.sleep(1000);
 				Library.custom_click(loginpage.getLogintab(),"logintab");
 				Thread.sleep(1000);
-				Library.custom_sendkeys(loginpage.getUserName(),excel.getExcelData("Sheet1", 1, 1),"username");
+				Library.custom_sendkeys(loginpage.getUserName(),excel.getExcelData("Credentials", 1, 1),"username");
 				Thread.sleep(1000);
-				Library.custom_sendkeys(loginpage.getPassword(), excel.getExcelData("Sheet1", 1, 2),"password");
+				Library.custom_sendkeys(loginpage.getPassword(), excel.getExcelData("Credentials", 1, 2),"password");
 			    Thread.sleep(1000);
 				Library.custom_click(loginpage.getLogin(),"login");
 				Thread.sleep(1000);
 				
-				}catch(Exception e) {
 					
-					System.out.println(e.getMessage());
-				}	
 					
 			}
 			
@@ -198,21 +233,19 @@ public  class UserOnBoarding extends BaseClass {
 				
 			try {
 				ExplorePage explore=PageFactory.initElements(driver,  ExplorePage.class);
+				LoginPage loginpage=PageFactory.initElements(driver, LoginPage.class);
+				
 				Thread.sleep(1000);
 			    explore.getExplorebutton().click();
 			    Thread.sleep(1000);
-//				UserOnBoarding.schoolheadicon();
-//				UserOnBoarding.bmcpopuphandle();
-//				UserOnBoarding.locationpopuphandle();
-				LoginPage loginpage=PageFactory.initElements(driver, LoginPage.class);
-				
+			
 		        Library.custom_click(loginpage.getHeaderDropdown(),"headerdropdown");
 				Thread.sleep(1000);
 				Library.custom_click(loginpage.getLogintab(),"logintab");
 				Thread.sleep(1000);
-				Library.custom_sendkeys(loginpage.getUserName(),excel.getExcelData("Sheet1", 2, 1),"username");
+				Library.custom_sendkeys(loginpage.getUserName(),excel.getExcelData("Credentials", 2, 1),"username");
 			    Thread.sleep(1000);
-				Library.custom_sendkeys(loginpage.getPassword(), excel.getExcelData("Sheet1", 2, 2 ),"password");
+				Library.custom_sendkeys(loginpage.getPassword(), excel.getExcelData("Credentials", 2, 2 ),"password");
 		        Thread.sleep(1000);
 				Library.custom_click(loginpage.getLogin(),"login");
 				Thread.sleep(1000);
@@ -301,8 +334,8 @@ public  class UserOnBoarding extends BaseClass {
 			Thread.sleep(1000);
 			Library.custom_click(Log.getLogintab(),"Logintab");
 			Thread.sleep(1000);
-			Library.custom_sendkeys(Log.getUserName(),excel.getExcelData("Sheet1", 5,1 ), "username");
-			Library.custom_sendkeys(Log.getPassword(),excel.getExcelData("Sheet1", 5,2 ), "Password");
+			Library.custom_sendkeys(Log.getUserName(),excel.getExcelData("Credentials", 5,1 ), "username");
+			Library.custom_sendkeys(Log.getPassword(),excel.getExcelData("Credentials", 5,2 ), "Password");
 			Library.custom_click(Log.getLogin(),"login button");
 			
 		}catch(Exception e){
@@ -322,9 +355,9 @@ public  class UserOnBoarding extends BaseClass {
 			Thread.sleep(1000);
 			Library.custom_click(loginpage.getLogintab(),"logintab");
 			Thread.sleep(1000);
-			Library.custom_sendkeys(loginpage.getUserName(),excel.getExcelData("Sheet1", 1, 1),"username");
+			Library.custom_sendkeys(loginpage.getUserName(),excel.getExcelData("Credentials", 1, 1),"username");
 			Thread.sleep(1000);
-			Library.custom_sendkeys(loginpage.getPassword(), excel.getExcelData("Sheet1", 1, 2),"password");
+			Library.custom_sendkeys(loginpage.getPassword(), excel.getExcelData("Credentials", 1, 2),"password");
 		    Thread.sleep(1000);
 			Library.custom_click(loginpage.getLogin(),"login");
 			Thread.sleep(1000);

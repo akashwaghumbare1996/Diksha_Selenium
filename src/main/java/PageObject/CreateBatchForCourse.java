@@ -24,10 +24,10 @@ public class CreateBatchForCourse {
 	@FindBy(how=How.XPATH,using="//textarea[@name='description']")
 	private WebElement description;
 	
-	@FindBy(how=How.XPATH,using="//input[@id='mat-input-0']")
+	@FindBy(how=How.XPATH,using="//input[@formcontrolname='startDate']")
 	private WebElement startDate;
 	
-	@FindBy(how=How.XPATH,using="//input[@id='mat-input-1']")
+	@FindBy(how=How.XPATH,using="//input[@formcontrolname='endDate']")
 	private WebElement endDate;
 	
 	@FindBy(how=How.XPATH,using="//input[@id='mat-input-2']")

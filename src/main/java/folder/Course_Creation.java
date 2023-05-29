@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import PageObject.CourseCreation;
 import Utility.BaseClass;
+import Utility.DikshaUtils;
 import Utility.Library;
 
 import java.net.MalformedURLException;
@@ -25,18 +26,17 @@ public class Course_Creation extends BaseClass {
 		Thread.sleep(1000);
 		content.getAddCourseTitle().clear();
 		Thread.sleep(1000);
-        String randomname=RandomStringUtils.randomAlphabetic(8);
-		Library.custom_sendkeys(content.getAddCourseTitle(), "Course"+randomname,"bookname");
+        String randomname=DikshaUtils.set_Content_Name("Course_");
+		Library.custom_sendkeys(content.getAddCourseTitle(),randomname,"course name");
 		Thread.sleep(1000);
-        String coursename="Course"+randomname;
-        
-        String currentUrl = driver.getCurrentUrl(); 
-        String[] doid= currentUrl.split("do_");
-        //String Do_id= currentUrl.substring(49, 74);
-        
-        System.out.print(doid);
+		
+      
+        String id= DikshaUtils.generate_Do_id();
+    
+       excel.updateData("TestData","Course" ,randomname, id);
         
         
+     
         
         int scrollX = 0; // horizontal scroll amount
 		int scrollY = 200; // vertical scroll amount
@@ -81,7 +81,7 @@ public class Course_Creation extends BaseClass {
 		Library.custom_sendkeys(content.getSelectCopyRightYear(),"2023","SelectCopyRightYear");
 		Thread.sleep(1000);
 		Library.custom_click(content.getSaveAsDraft(),"SaveAsDraft");
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		Library.custom_click(content.getAddChild(),"SelectBoardForcourse");
 		Thread.sleep(1000);
 		Library.custom_sendkeys(content.getChildDesc1(),"CdildDesc","ChildDesc1");
@@ -107,7 +107,7 @@ public class Course_Creation extends BaseClass {
 		Library.custom_click(content.getNewCoursesubmitButton(),"SubmitForreviewButton");
 		Thread.sleep(4000);
 	
-		return coursename;
+		return randomname;
 		
 
             

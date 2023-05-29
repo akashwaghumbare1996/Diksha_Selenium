@@ -39,7 +39,7 @@ public class BaseClass {
 		
 		WebDriverManager.chromedriver().setup();
 	    driver=new ChromeDriver();
-	    driver.get(config.get_preprod_url());
+	    driver.get(config.get_app_url());
 	    driver.manage().window().maximize();
 //	    WebElement Explorebutton=driver.findElement(By.xpath("//button[@data-translate='btnExploreDiksha']"));
 //	    Explorebutton.click();
@@ -50,7 +50,7 @@ public class BaseClass {
 	}
 
 
-	//@AfterMethod	
+	@AfterMethod	
 	
 	public void Close() {
 		driver.close();

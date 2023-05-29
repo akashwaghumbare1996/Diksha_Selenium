@@ -18,25 +18,45 @@ public class ConfigDataProvider {
 		
 	}
 	
-	public String get_preprod_url() {
+	public String get_app_url() {
 		
-		return pro.getProperty("preprod_url");
+		return pro.getProperty("app_url");
 			
 	}
 	
-	public  String get_sunbird_url() {
+	public  String get_test_data() {
 		
-		return pro.getProperty("Sunbird_url");
+		return pro.getProperty("test_data");
 		
-	}
-	public String get_preprod_data() {
-		
-		return pro.getProperty("preprod_data");
 	}
 	
-       public String get_preprod() {
+	public String get_short_pdf() {
 		
-		return pro.getProperty("preprod");
+		return pro.getProperty("short_pdf");
 	}
+	
+       public String get_long_pdf() {
+		
+		return pro.getProperty("long_pdf");
+	}
+     
+       public String get_mp4() {
+   		
+   		return pro.getProperty("mp4");
+   	}
+   	
+          public String get_h5p() {
+   		
+   		return pro.getProperty("h5p");
+   	}
+       
+          public String get_epub() {
+         		
+         		return pro.getProperty("epub");
+      	}
+             
+             
+       
+       
 	
 }

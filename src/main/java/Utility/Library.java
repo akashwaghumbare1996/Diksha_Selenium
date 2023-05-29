@@ -2,6 +2,7 @@ package Utility;
 
 import java.io.FileInputStream;
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -29,7 +31,7 @@ public class Library  {
 	static ExtentTest test;
 	public static WebDriver driver;
 
-     public static void custom_click(WebElement element,String Fieldname) {
+     	public static void custom_click(WebElement element,String Fieldname) {
     	 
     	 try
     	 {
@@ -40,25 +42,29 @@ public class Library  {
     	 }
      }
      
- public static void custom_sendkeys(WebElement element,String value,String fieldname) {
+     	public static void custom_sendkeys(WebElement element,String value,String fieldname) {
+     		 try
+        	 {
     	 
-    	 try
-    	 {
     		   element.sendKeys(value);
     		   test.log(Status.PASS, value + "Value Succesfully send "+ fieldname );
-    		    }catch(Exception e) {
-    		    	test.log(Status.FAIL,e.getMessage());
-    		
-    	 }
+     	}catch(Exception e) {
+   		 test.log(Status.FAIL,e.getMessage());
+   	   
  }
-    		   public static void explicitWait(WebDriver driver, Duration timeout, ExpectedCondition condition) {
-    		     WebDriverWait wait = new WebDriverWait(driver, timeout);
-    		      wait.until(condition);
-    		    }
-}
- 
+    	
+     	}  		    
+     	public  static void assert_Is_Displayed(WebElement element,String fieldname) {
+     		
+    			 if(element.isDisplayed()) {
+    				 test.log(Status.PASS, " Succesfully Clicked On "+ fieldname);
+    			 }else {
+    	    		 test.log(Status.FAIL,"not able to Clicked On "+ fieldname );
+    			 }	  
+     	}
 
- 
+       	    	
+}
 
  
  

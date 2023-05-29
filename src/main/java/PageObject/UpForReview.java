@@ -48,7 +48,7 @@ public class UpForReview {
 
 	private WebElement searchedContentForPublish;
 
-	@FindBy(how=How.XPATH,using="//div[contains(text(),'PDF_Sample')]")
+	@FindBy(how=How.XPATH,using="//div[contains(text(),'PDF_')]")
 
 	private WebElement clickSearchContent;	
 

@@ -25,20 +25,20 @@ public class ExcelDataProvider extends BaseClass {
 	 
 	public ExcelDataProvider() throws Exception {
 		  
-			String preprod = config.get_preprod();
+			String preprod = config.get_test_data();
 		    String path=System.getProperty("user.dir")+preprod;
-		    System.out.println(path);
-		    System.out.println(preprod);
+		   
 			FileInputStream fis=new FileInputStream(path);
 			 wb=WorkbookFactory.create(fis);
-		
+			 
 		
 	}
 	public String getExcelData(String sheetname, int row, int cell) {
-
+		
 		return wb.getSheet(sheetname).getRow(row).getCell(cell).getStringCellValue();
-
+         
 	}
+	
 	
 	public void updateData(String sheetName, String Data1, String Data2, String Data3) throws IOException
 
@@ -46,7 +46,7 @@ public class ExcelDataProvider extends BaseClass {
 
 	//Setting path of the excel test data file
 
-	String preD = config.get_preprod_data();
+	String preD = config.get_test_data();
 
 	String exclPath=System.getProperty("user.dir")+preD;
 	FileInputStream fis1 =new FileInputStream (exclPath);
